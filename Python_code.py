@@ -14,8 +14,10 @@ data.drop("timestamp",axis=1, inplace=True)
 data['sector'].replace(['Power','Industry','Ground Transport','Residential','International Aviation','Domestic Aviation'],[6,5,4,3,2,1],inplace= True)
 y = data.value
 x = data.drop('value', axis =1)
-from catboost import CatBoostRegressor #Categorical boosting
-model= CatBoostRegressor(depth=10, learning_rate=0.1, iterations=100)
+# from catboost import CatBoostRegressor #Categorical boosting
+# model= CatBoostRegressor(depth=10, learning_rate=0.1, iterations=100)
+from sklearn.ensemble import RandomForestRegressor
+model= RandomForestRegressor(max_depth=10, n_estimators=100)
 model.fit(x,y)
 pickle.dump(model,open("model.pkl","wb"))
 model=pickle.load(open("model.pkl","rb"))

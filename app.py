@@ -13,8 +13,8 @@ model=pickle.load(open("model.pkl","rb"))
 @app.route('/')
 def hello_world():
     return render_template("carbon_monitor.html")
-@app.route("/check_status", methods=["POST","GET"])
-def check_status():
+@app.route("/Predict", methods=["POST","GET"])
+def Predict():
     all_features=[int(x) for x in request.form.values()]
     print(all_features)
     int_features=[1 if x=="Yes" else x for x in all_features]
@@ -24,6 +24,7 @@ def check_status():
     int_features = int_features[:4]+countries
     print(int_features)
     final=[np.array(int_features)]
+    print(countries)
     prediction=model.predict(final)
     print(prediction)
     output= abs(float(prediction[0]))
